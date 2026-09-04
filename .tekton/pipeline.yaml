@@ -3,7 +3,13 @@ kind: Pipeline
 metadata:
   name: echo-props-pipeline
 spec:
+  workspaces:
+    - name: simple-pvc
+      description: Workspace for sharing data between pipeline tasks
   tasks:
     - name: simple-tekton-pipeline
       taskRef:
         name: simple-task
+      workspaces:
+        - name: simple-pvc
+          workspace: simple-pvc
