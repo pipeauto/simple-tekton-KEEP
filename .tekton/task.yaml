@@ -21,11 +21,10 @@ spec:
       args:
         - |
           echo -e "Start Pipeline Run - Build Number $BUILD_NUMBER"
-
-          # Demonstrate PVC write operation
           echo "Writing to persistent storage..."
           echo "Build $BUILD_NUMBER started at $(date)" > /workspace/simple-pvc/build-info.txt
           echo "Pipeline: echo-props-pipeline" >> /workspace/simple-pvc/build-info.txt
+          sleep 30;
           echo "Reading from persistent storage..."
           cat /workspace/simple-pvc/build-info.txt
 
