@@ -30,3 +30,13 @@ spec:
       spec:
         pipelineRef:
           name: echo-props-pipeline
+        workspaces:
+          - name: simple-pvc
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: ibmc-vpc-block-5iops-tier # Matches your SDP StorageClass
+                resources:
+                  requests:
+                    storage: 10Gi

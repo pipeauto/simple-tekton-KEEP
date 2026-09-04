@@ -3,7 +3,12 @@ kind: Task
 metadata:
   name: simple-task
 spec:
+  workspaces:
+    - name: simple-pvc
+      description: Workspace for persistent storage
+      mountPath: /workspace/simple-pvc
   stepTemplate:
+    name: ""
     env:
       - name: BUILD_NUMBER
         valueFrom:
@@ -14,6 +19,17 @@ spec:
       image: icr.io/continuous-delivery/pipeline/pipeline-base-image
       command: ["/bin/bash", "-c"]
       args:
-        - echo -e "Start Pipeline Run - Build Number $BUILD_NUMBER";
-          sleep 30;
-          echo "Build $BUILD_NUMBER Complete";
+        - |
+          echo -e "Start Pipeline Run - Build Number $BUILD_NUMBER"
+
+          # Demonstrate PVC write operation
+          echo "Writing to persistent storage..."
+          echo "Build $BUILD_NUMBER started at $(date)" > /workspace/simple-pvc/build-info.txt
+          echo "Pipeline: echo-props-pipeline" >> /workspace/simple-pvc/build-info.txt
+
+          sleep 300
+
+          echo "Reading from persistent storage..."
+          cat /workspace/simple-pvc/build-info.txt
+
+          echo "Build $BUILD_NUMBER Complete"
