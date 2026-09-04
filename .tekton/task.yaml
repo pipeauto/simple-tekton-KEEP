@@ -26,9 +26,6 @@ spec:
           echo "Writing to persistent storage..."
           echo "Build $BUILD_NUMBER started at $(date)" > /workspace/simple-pvc/build-info.txt
           echo "Pipeline: echo-props-pipeline" >> /workspace/simple-pvc/build-info.txt
-
-          sleep 300
-
           echo "Reading from persistent storage..."
           cat /workspace/simple-pvc/build-info.txt
 
